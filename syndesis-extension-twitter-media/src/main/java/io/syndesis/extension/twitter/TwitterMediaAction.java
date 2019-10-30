@@ -61,6 +61,8 @@ public class TwitterMediaAction implements Step {
 			Status status = (Status) incomingBody;
 			if (!status.isRetweet() && ObjectHelper.isNotEmpty(status.getMediaEntities()) && status.getMediaEntities().length > 0) {
 				message.setBody(new TweetMedia(status).toJSON());
+			} else {
+				message.setBody(null);
 			}
 		} else {
 			throw new ClassCastException("Body isn't Status, why are you using this component!?"
