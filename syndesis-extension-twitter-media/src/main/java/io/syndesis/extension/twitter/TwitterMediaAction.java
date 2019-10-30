@@ -17,6 +17,7 @@ import twitter4j.Status;
 		"twitter", "media", "extension" })
 public class TwitterMediaAction implements Step {
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public Optional<ProcessorDefinition> configure(CamelContext context, ProcessorDefinition route,
 			Map<String, Object> parameters) {
