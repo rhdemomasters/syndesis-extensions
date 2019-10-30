@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.apache.camel.util.ObjectHelper;
+import org.apache.camel.util.StringHelper;
 
 import twitter4j.JSONObject;
 import twitter4j.MediaEntity;
@@ -49,7 +50,16 @@ public class TweetMedia {
 			
 			
 			for (MediaEntity mediaEntity : mediaEntities) {
-				json.append("url", mediaEntity.getMediaURL());
+				String mediaURL = mediaEntity.getMediaURL();
+				String mediaHTTPSurl = mediaEntity.getMediaURLHttps();
+				
+				if (ObjectHelper.isNotEmpty(mediaURL)) {
+					json.append("url", mediaURL);
+				} else if (ObjectHelper.isNotEmpty(mediaHTTPSurl)) {
+					json.append("url", mediaHTTPSurl);
+				} else {
+					json.append("url", "https://quarkus.io/assets/images/quarkus_logo_horizontal_rgb_reverse.svg");
+				}
 			}
 		}
 		return json;
