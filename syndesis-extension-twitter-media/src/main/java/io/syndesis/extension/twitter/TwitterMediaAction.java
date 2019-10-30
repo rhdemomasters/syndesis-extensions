@@ -29,6 +29,8 @@ public class TwitterMediaAction implements Step {
 			route.log(e.getMessage());
 		} catch (ClassCastException e) {
 			route.log(e.getMessage());
+		} catch (Exception ex){
+			route.log(ex.getMessage());
 		}
 		return Optional.of(route);
 	}
@@ -55,8 +57,11 @@ public class TwitterMediaAction implements Step {
 
 		Object incomingBody = message.getBody();
 
-		if (incomingBody instanceof Status) {
-			message.setBody((new TweetMedia((Status)incomingBody)).toJSON());
+		if (incomingBody instanceof Status) { 
+			Status status = (Status) incomingBody;
+			if (!status.isRetweet() && ObjectHelper.isNotEmpty(status.getMediaEntities()) && status.getMediaEntities().length > 0) {
+				message.setBody(new TweetMedia(status).toJSON());
+			}
 		} else {
 			throw new ClassCastException("Body isn't Status, why are you using this component!?"
 					+ (incomingBody != null ? incomingBody.getClass() : " empty"));

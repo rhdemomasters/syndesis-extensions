@@ -49,7 +49,7 @@ public class TweetMedia {
 	public JSONObject toJSON() {
 		JSONObject json = null;
 		
-		if (ObjectHelper.isNotEmpty(this.user) &&  ObjectHelper.isNotEmpty(this.createdAt) && ObjectHelper.isNotEmpty(mediaEntities)) {
+		if (ObjectHelper.isNotEmpty(this.user) &&  ObjectHelper.isNotEmpty(this.createdAt) && ObjectHelper.isNotEmpty(mediaEntities) && mediaEntities.length > 0) {
 			json = new JSONObject();
 			json.put(twitterID, this.user.getId());
 			json.put(twitterName, this.user.getName());
@@ -71,7 +71,7 @@ public class TweetMedia {
 				} else if (ObjectHelper.isNotEmpty(fallback)) {
 					json.append(url, fallback);
 				} else {
-					json.append(url, "https://quarkus.io/assets/images/quarkus_logo_horizontal_rgb_reverse.svg");
+					json.append(url, "https:\\/\\/quarkus.io\\/assets\\/images\\/quarkus_logo_horizontal_rgb_reverse.svg");
 				}
 			}
 		}
